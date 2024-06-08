@@ -1,0 +1,171 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.SectionTask{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.Form-Task{
+    width: 400px;
+    height: 350px;
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    
+}
+
+.div-form{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.div-input{
+    width: 250px;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.div-input input{
+    width: 240px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.div-Task{
+    width: 700px;
+    height: 600px;
+    border: 1px solid;
+    border-radius: 15px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    overflow-y: scroll;
+}
+
+
+.Task{
+    width: 200px;
+    height: 250px;
+    border: 1px solid;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.div-btn-Task{
+    display: flex ;
+    gap: 10px;
+}
+
+.div-btn-Task button{
+    height: 30px;
+    width: 80px;
+    border: 1px solid;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.div-update-Task{
+    position: fixed;
+    bottom: 35%;
+    left: 50%;
+    border: 2px solid;
+    border-radius: 15px;
+    padding: 20px 25px 3px 25px;
+    background: white;
+    color: black;
+    font-size: 10px;
+    z-index: 10000;
+    width: 360px;
+    height: 290px;
+    text-align: justify;
+    text-decoration: none;
+}
+.div-btn-exit{
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+.div-btn-exit button{
+    width: 30px;
+    border: none;
+    background: none;
+    font-size: 20px;
+}
+.Update{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.div-Delete-Task{
+    position: fixed;
+    bottom: 40%;
+    left: 50%;
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 20px 25px 3px 25px;
+    background: white;
+    color: black;
+    font-size: 10px;
+    z-index: 10000;
+    width: 358px;
+    height: 200px;
+    text-align: justify;
+    text-decoration: none;
+}
+
+.div-delete{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+}
+
+.btn-Update-Task,
+.btn-register-Task{
+    width: 200px;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 15px;
+    background-color: transparent;
+    cursor: pointer;
+}

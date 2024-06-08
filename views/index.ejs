@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crud de Tareas</title>
+    <link rel="stylesheet" href="/style/CrateTask.css" type="text/css" >
+</head>
+<body>
+    <section class="SectionTask">
+        <div class="Form-Task">
+            <h3>Registrar Una Nueva Tarea</h3>
+            <div class="div-form">
+                <div class="div-input">
+                    <input type="text" placeholder="Titulo de la tarea" id="TaskInput">
+               </div>
+               <div class="div-input">
+                    <input type="text" placeholder="Descripcion de la tare" id="DescriptionInput">
+                </div>
+                
+            </div>
+            <button class="btn-register-Task">Registrar</button>
+        </div>
+        <div class="div-Task">
+            
+        </div>
+
+        <div class="div-update-Task" style="display:none;">
+            <div class="div-btn-exit">
+                <button id="btn-exit">X</button>
+            </div>
+    
+            <div class="Update">
+                <h1>Edita tu Tarea</h1>
+                <div class="div-input">
+                    <input type="text" placeholder="Titulo de la tarea" id="TaskInputUpdate">
+               </div>
+               <div class="div-input">
+                    <input type="text" placeholder="Descripcion de la tare" id="DescriptionInputUpdate">
+                </div>
+               
+                <button class="btn-Update-Task ">Editar</button>
+            </div>
+        </div>
+
+
+        <div class="div-Delete-Task" style="display:none;">
+            <div class="div-btn-exit">
+                <button id="btn-exit-delete">X</button>
+            </div>
+            <div class="div-delete">
+                <h1>¿Estas seguro que quieres Borrar esta Tarea?</h1>
+            <div class="div-btn-Task">
+                <button>Cancelar</button>
+                <button class="btn-Delete-book">Eliminar</button>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+    <template id="template1">
+        <div class="Task">
+            <h3 id="TituloTask"></h3>
+            <span id="DecriptionTask"></span>
+            <div class="div-btn-Task">
+                <button id="btn-Update">Editar</button>
+                <button id="btn-Delete">Eliminar</button>
+            </div>
+        </div>
+    </template>
+
+    <script >
+     let idTask;
+        //Obtener Tarea
+    function gettask(){
+        fetch('/getTask')
+       .then(respuesta => respuesta.json()) 
+       .then(datos => {
+        console.log(datos);
+        
+        const contentMain = document.querySelector('.div-Task');
+        const $template = document.querySelector('#template1');
+        let $fragment = new DocumentFragment();
+       
+
+      datos.forEach((Task) => {
+        // Assuming 'title' and 'description' are property names
+        const clone = $template.content.lastElementChild.cloneNode(true);
+        clone.querySelector('#TituloTask').textContent = Task.taks;
+        clone.querySelector('#DecriptionTask').textContent = Task.description;
+        clone.querySelector('#btn-Update').addEventListener('click', () => {
+            document.querySelector(".div-update-Task").style.display = "block";
+            idTask = Task.id;
+            console.log(idTask);
+         
+        });
+        clone.querySelector('#btn-Delete').addEventListener('click', () => {
+            document.querySelector(".div-Delete-Task").style.display = "block";
+            idTask = Task.id;
+            console.log(idTask);
+         
+        });
+        $fragment.appendChild(clone);
+      });
+
+      if (contentMain) {
+        contentMain.appendChild($fragment);
+      } else {
+        document.body.appendChild($fragment);
+      }
+    })
+    .catch(error => console.error("Error:", error));
+    }
+    gettask();
+
+
+    //Crear Tarea
+document.querySelector('.btn-register-Task').addEventListener('click', async()=>{
+        const TaskI = document.getElementById("TaskInput").value; 
+        const DescriptionI = document.getElementById("DescriptionInput").value; 
+    
+       if(!TaskI || !DescriptionI){
+        console.log("Ingrese los datos");
+       } else{
+
+        const data ={
+            tarea: TaskI,
+            descripcion: DescriptionI,
+        }
+
+        console.log(JSON.stringify(data));
+        const response = await fetch("/taksPost",{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            mode:"cors"
+    })
+       }
+    })
+    //Editar Tarea
+document.querySelector(".btn-Update-Task").addEventListener("click", async () => {
+        const TaskI = document.getElementById("TaskInputUpdate").value; 
+        const DescriptionI = document.getElementById("DescriptionInputUpdate").value; 
+
+        const data ={}
+
+        if(idTask){
+            data.id = idTask;
+        }
+        if(TaskI){
+            data.tarea= TaskI;
+        }
+
+        if(DescriptionI){
+            data.descripcion = DescriptionI;
+        }
+
+        console.log(JSON.stringify(data));
+        const response = await fetch("/UpdateTask",{
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            mode:"cors"
+    })
+       
+});
+    //Eliminar Tarea
+document.querySelector(".btn-Delete-book").addEventListener("click", async() => {
+    const data ={}
+
+    if(idTask){
+        data.id = idTask;
+    }
+
+
+    console.log(JSON.stringify(data));
+const response = await fetch("/Deteletask",{
+    method: 'DELETE',
+    body: JSON.stringify(data),
+    headers: {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+    },
+    mode:"cors"
+})
+});
+
+document.querySelector("#btn-exit").addEventListener("click", () => {
+  document.querySelector(".div-Delete-Task").style.display = "none";
+  document.querySelector(".div-update-Task").style.display = "none";
+});
+
+document.querySelector("#btn-exit-delete").addEventListener("click", () => {
+  document.querySelector(".div-Delete-Task").style.display = "none";
+
+});
+
+    </script>
+</body>
+</html>
